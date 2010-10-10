@@ -1,0 +1,6 @@
+build
+*.mode1v3
+*.pbxuser
+*~
+documentation/core-plot-touch-tags.xml
+framework/CorePlotTouchDocs.docset
