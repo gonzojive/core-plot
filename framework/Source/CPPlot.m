@@ -46,6 +46,11 @@
  **/
 @synthesize dataSource;
 
+/**	@property plotDelegate
+ *	@brief The main delegate for the plot.
+ **/
+@synthesize plotDelegate;
+
 /**	@property identifier
  *	@brief An object used to identify the plot in collections.
  **/
@@ -161,6 +166,8 @@
 	[labelTextStyle release];
 	[labelFormatter release];
 	[labelAnnotations release];
+	if (plotDelegate)
+		[plotDelegate release];
 	
     [super dealloc];
 }
@@ -172,6 +179,44 @@
 {
     [self reloadDataIfNeeded];
     [super drawInContext:theContext];
+}
+
+#pragma mark -
+#pragma mark Interaction with user
+
+
+-(BOOL)pointingDeviceDraggedEvent:(id)event atPoint:(CGPoint)interactionPoint
+{
+	return [self pointingDeviceDownEvent:event atPoint:interactionPoint];
+}
+
+-(BOOL)pointingDeviceDownEvent:(id)event atPoint:(CGPoint)interactionPoint
+{
+	BOOL result = NO;
+	if ( !self.graph || !self.plotArea ) return NO;
+    
+	id <CPPlotDelegate> theDelegate = self.plotDelegate;
+	if ( [theDelegate respondsToSelector:@selector(plot:plotPointWasSelected:)] )
+	{
+		//CPPlotSpace * thePlotSpace =  self.graph.defaultPlotSpace;
+		NSDecimal* plotAreaPoint = (NSDecimal *)malloc(sizeof(NSDecimal) * 3);
+		[plotSpace plotPoint:plotAreaPoint forPlotAreaViewPoint:interactionPoint];
+		result = [theDelegate plot:self plotPointWasSelected:plotAreaPoint];
+		
+		NSDecimal pX = plotAreaPoint[CPCoordinateX];
+		NSDecimal pY = plotAreaPoint[CPCoordinateY];
+		float xx = CPDecimalFloatValue(pX);
+		float yy = CPDecimalFloatValue(pY);
+		NSLog(@"coord in plot: %f, %f", xx, yy);
+        result = [super pointingDeviceDownEvent:event atPoint:interactionPoint];
+		free(plotAreaPoint);
+    }
+	if (!result)
+	{
+		result = [super pointingDeviceDownEvent:event atPoint:interactionPoint];
+	}
+	
+	return result;
 }
 
 #pragma mark -

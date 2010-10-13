@@ -107,11 +107,37 @@ typedef enum _CPPlotCachePrecision {
 
 @end 
 
+
+
+#pragma mark -
+
+/**	@brief Scatter plot delegate.
+ **/
+@protocol CPPlotDelegate <NSObject>
+
+@optional
+
+// @name Point selection
+/// @{
+
+/**	@brief Informs delegate that a point was touched.
+ *	@param plot The scatter plot.
+ *	@param plotPoint Point in plot data space of the point that was touched
+ **/
+-(BOOL)plot:(CPPlot *)plot plotPointWasSelected:(NSDecimal *)plotPoint;
+
+///	@}
+
+
+
+@end
+
 #pragma mark -
 
 @interface CPPlot : CPAnnotationHostLayer {
 	@private
     id <CPPlotDataSource> dataSource;
+	id <CPPlotDelegate> plotDelegate;
     id <NSCopying, NSObject> identifier;
     CPPlotSpace *plotSpace;
     BOOL dataNeedsReloading;
@@ -132,6 +158,11 @@ typedef enum _CPPlotCachePrecision {
 /// @name Data Source
 /// @{
 @property (nonatomic, readwrite, assign) id <CPPlotDataSource> dataSource;
+///	@}
+
+/// @name Plot Delegate
+/// @{
+@property (nonatomic, readwrite, retain) id <CPPlotDelegate> plotDelegate;
 ///	@}
 
 /// @name Identification
