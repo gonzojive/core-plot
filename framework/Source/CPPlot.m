@@ -324,11 +324,11 @@ static NSString * const CPPlotBindingOptions = @"CPPlotBindingOptions";					///<
 		[plotSpace plotPoint:plotAreaPoint forPlotAreaViewPoint:interactionPoint];
 		result = [theDelegate plot:self plotPointWasSelected:plotAreaPoint];
 		
-		NSDecimal pX = plotAreaPoint[CPCoordinateX];
-		NSDecimal pY = plotAreaPoint[CPCoordinateY];
-		float xx = CPDecimalFloatValue(pX);
-		float yy = CPDecimalFloatValue(pY);
-		NSLog(@"coord in plot: %f, %f", xx, yy);
+		//NSDecimal pX = plotAreaPoint[CPCoordinateX];
+		//NSDecimal pY = plotAreaPoint[CPCoordinateY];
+		//float xx = CPDecimalFloatValue(pX);
+		//float yy = CPDecimalFloatValue(pY);
+		//NSLog(@"coord in plot: %f, %f", xx, yy);
         result = [super pointingDeviceDownEvent:event atPoint:interactionPoint];
 		free(plotAreaPoint);
     }

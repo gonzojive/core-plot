@@ -1097,7 +1097,7 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				SYMROOT = "$(PROJECT_DIR)/../build";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1130,7 +1130,7 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				SYMROOT = "$(PROJECT_DIR)/../build";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
