@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CorePlotQCPlugIn.h"
 
-@interface CPBarPlotPlugIn : CorePlotQCPlugIn<CPBarPlotDataSource> {
+@interface CPBarPlotPlugIn : CorePlotQCPlugIn<CPTBarPlotDataSource> {
 }
 
 @property(assign) double inputBaseValue;
@@ -9,6 +9,6 @@
 @property(assign) double inputBarOffset;
 @property(assign) BOOL inputHorizontalBars;
 
--(CPFill *) barFillForBarPlot:(CPBarPlot *)barPlot recordIndex:(NSNumber *)index;
+-(CPTFill *) barFillForBarPlot:(CPTBarPlot *)barPlot recordIndex:(NSNumber *)index;
 
 @end

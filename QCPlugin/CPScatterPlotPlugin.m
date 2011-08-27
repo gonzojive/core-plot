@@ -48,21 +48,25 @@
 								QCPortTypeStructure, QCPortAttributeTypeKey,
 								nil]];
 	
+	CGColorRef lineColor = [self newDefaultColorForPlot:index alpha:1.0];
 	[self addInputPortWithType:QCPortTypeColor
 						forKey:[NSString stringWithFormat:@"plotDataLineColor%i",  index]
 				withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 								[NSString stringWithFormat:@"Plot Line Color %i", index+1], QCPortAttributeNameKey,
 								QCPortTypeColor, QCPortAttributeTypeKey,
-								[self defaultColorForPlot:index alpha:1.0], QCPortAttributeDefaultValueKey,
+								lineColor, QCPortAttributeDefaultValueKey,
 								nil]];
+	CGColorRelease(lineColor);
 	
+	CGColorRef fillColor = [self newDefaultColorForPlot:index alpha:0.25];
 	[self addInputPortWithType:QCPortTypeColor
 						forKey:[NSString stringWithFormat:@"plotFillColor%i",  index]
 				withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 								[NSString stringWithFormat:@"Plot Fill Color %i", index+1], QCPortAttributeNameKey,
 								QCPortTypeColor, QCPortAttributeTypeKey,
-								[self defaultColorForPlot:index alpha:0.25], QCPortAttributeDefaultValueKey,
+								fillColor, QCPortAttributeDefaultValueKey,
 								nil]];
+	CGColorRelease(fillColor);
 		
 	[self addInputPortWithType:QCPortTypeNumber
 						forKey:[NSString stringWithFormat:@"plotDataLineWidth%i",  index]
@@ -84,22 +88,33 @@
 								[NSNumber numberWithInt:10], QCPortAttributeMaximumValueKey,
 								nil]];	
 	
+	CGColorRef symbolColor = [self newDefaultColorForPlot:index alpha:0.25];
 	[self addInputPortWithType:QCPortTypeColor
 						forKey:[NSString stringWithFormat:@"plotDataSymbolColor%i",  index]
 				withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 								[NSString stringWithFormat:@"Data Symbol Color %i", index+1], QCPortAttributeNameKey,
 								QCPortTypeColor, QCPortAttributeTypeKey,
-								[self defaultColorForPlot:index alpha:0.25], QCPortAttributeDefaultValueKey,
+								symbolColor, QCPortAttributeDefaultValueKey,
 								nil]];
+	CGColorRelease(symbolColor);
 	
 	// Add the new plot to the graph
-	CPScatterPlot *scatterPlot = [[[CPScatterPlot alloc] init] autorelease];
+	CPTScatterPlot *scatterPlot = [[[CPTScatterPlot alloc] init] autorelease];
 	scatterPlot.identifier = [NSString stringWithFormat:@"Data Source Plot %i", index+1];
-	scatterPlot.dataLineStyle.lineWidth = 3.f;
-	scatterPlot.dataLineStyle.lineColor = [CPColor colorWithCGColor:[self defaultColorForPlot:index alpha:1.0]];
-	scatterPlot.areaFill = [CPFill fillWithColor:[CPColor colorWithCGColor:[self defaultColorForPlot:index alpha:0.25]]];
+    
+    // Line Style
+	lineColor = [self newDefaultColorForPlot:index alpha:1.0];
+	fillColor = [self newDefaultColorForPlot:index alpha:0.25];
+    CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
+    lineStyle.lineWidth = 3.f;
+    lineStyle.lineColor = [CPTColor colorWithCGColor:lineColor];
+    scatterPlot.dataLineStyle = lineStyle;
+	scatterPlot.areaFill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:fillColor]];
 	scatterPlot.dataSource = self;
 	[graph addPlot:scatterPlot];			
+
+	CGColorRelease(lineColor);
+	CGColorRelease(fillColor);
 }
 
 - (void) removePlots:(NSUInteger)count
@@ -120,32 +135,32 @@
 	}
 }
 
-- (CPPlotSymbol *) plotSymbol:(NSUInteger)index
+- (CPTPlotSymbol *) plotSymbol:(NSUInteger)index
 {
 	NSString *key = [NSString stringWithFormat:@"plotDataSymbols%i", index];
 	NSUInteger value = [[self valueForInputKey:key] unsignedIntValue];
 
 	switch (value) {
 		case 1:
-			return [CPPlotSymbol ellipsePlotSymbol];
+			return [CPTPlotSymbol ellipsePlotSymbol];
 		case 2:
-			return [CPPlotSymbol trianglePlotSymbol];
+			return [CPTPlotSymbol trianglePlotSymbol];
 		case 3:
-			return [CPPlotSymbol rectanglePlotSymbol];
+			return [CPTPlotSymbol rectanglePlotSymbol];
 		case 4:
-			return [CPPlotSymbol plusPlotSymbol];
+			return [CPTPlotSymbol plusPlotSymbol];
 		case 5:
-			return [CPPlotSymbol starPlotSymbol];
+			return [CPTPlotSymbol starPlotSymbol];
 		case 6:
-			return [CPPlotSymbol diamondPlotSymbol];
+			return [CPTPlotSymbol diamondPlotSymbol];
 		case 7:
-			return [CPPlotSymbol pentagonPlotSymbol];
+			return [CPTPlotSymbol pentagonPlotSymbol];
 		case 8:
-			return [CPPlotSymbol hexagonPlotSymbol];
+			return [CPTPlotSymbol hexagonPlotSymbol];
 		case 9:
-			return [CPPlotSymbol dashPlotSymbol];
+			return [CPTPlotSymbol dashPlotSymbol];
 		case 10:
-			return [CPPlotSymbol snowPlotSymbol];
+			return [CPTPlotSymbol snowPlotSymbol];
 		default:
 			return nil;
 	}
@@ -161,19 +176,22 @@
 {
 	// Adjust the plots configuration using the QC input ports
 
-	for (CPScatterPlot* plot in [graph allPlots])
+	for (CPTScatterPlot* plot in [graph allPlots])
 	{		
 		int index = [[graph allPlots] indexOfObject:plot];
 		
-		plot.dataLineStyle.lineColor = [CPColor colorWithCGColor:[self dataLineColor:index]];
-		plot.dataLineStyle.lineWidth = [self dataLineWidth:index];
+        CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
+        lineStyle.lineColor = [CPTColor colorWithCGColor:(CGColorRef)[self dataLineColor:index]];
+        lineStyle.lineWidth = [self dataLineWidth:index];
+		plot.dataLineStyle = lineStyle;
+        
+        lineStyle.lineColor = [CPTColor colorWithCGColor:[self dataSymbolColor:index]];
 		plot.plotSymbol = [self plotSymbol:index];
-		plot.plotSymbol.lineStyle.lineWidth = [self dataLineWidth:index];
-		plot.plotSymbol.lineStyle.lineColor = [CPColor colorWithCGColor:[self dataSymbolColor:index]];
-		plot.plotSymbol.fill = [CPFill fillWithColor:[CPColor colorWithCGColor:[self dataSymbolColor:index]]];
+		plot.plotSymbol.lineStyle = lineStyle;
+		plot.plotSymbol.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[self dataSymbolColor:index]]];
 		plot.plotSymbol.size = CGSizeMake(10.0, 10.0);		
-		plot.areaFill = [CPFill fillWithColor:[CPColor colorWithCGColor:[self areaFillColor:index]]];
-		plot.areaBaseValue = CPDecimalFromFloat(MAX(self.inputYMin, MIN(self.inputYMax, 0.0)));
+		plot.areaFill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:(CGColorRef)[self areaFillColor:index]]];
+		plot.areaBaseValue = CPTDecimalFromFloat(MAX(self.inputYMin, MIN(self.inputYMax, 0.0)));
 		
 		[plot reloadData];
 	}
@@ -183,7 +201,7 @@
 #pragma mark -
 #pragma markData source methods
 
--(NSUInteger)numberOfRecordsForPlot:(CPPlot *)plot 
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot 
 {	
 	NSUInteger plotIndex = [[graph allPlots] indexOfObject:plot];
 	NSString *xKey = [NSString stringWithFormat:@"plotXNumbers%i", plotIndex];
@@ -198,7 +216,7 @@
 	return [[self valueForInputKey:xKey] count];
 }
 
--(NSNumber *)numberForPlot:(CPPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index 
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index 
 {
 	NSUInteger plotIndex = [[graph allPlots] indexOfObject:plot];
 	NSString *xKey = [NSString stringWithFormat:@"plotXNumbers%i", plotIndex];
@@ -210,7 +228,7 @@
 	else if ([[self valueForInputKey:xKey] count] != [[self valueForInputKey:yKey] count])
 		return nil;
 	
-	NSString *key = (fieldEnum == CPScatterPlotFieldX) ? xKey : yKey;
+	NSString *key = (fieldEnum == CPTScatterPlotFieldX) ? xKey : yKey;
 	
 	NSDictionary *dict = [self valueForInputKey:key];
 	

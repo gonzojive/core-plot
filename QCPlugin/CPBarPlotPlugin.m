@@ -102,21 +102,25 @@
 								QCPortTypeStructure, QCPortAttributeTypeKey,
 								nil]];
 	
+	CGColorRef lineColor = [self newDefaultColorForPlot:index alpha:1.0];
 	[self addInputPortWithType:QCPortTypeColor
 						forKey:[NSString stringWithFormat:@"plotDataLineColor%i",  index]
 				withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 								[NSString stringWithFormat:@"Plot Line Color %i", index+1], QCPortAttributeNameKey,
 								QCPortTypeColor, QCPortAttributeTypeKey,
-								[self defaultColorForPlot:index alpha:1.0], QCPortAttributeDefaultValueKey,
+								lineColor, QCPortAttributeDefaultValueKey,
 								nil]];
+	CGColorRelease(lineColor);
 	
+	CGColorRef fillColor = [self newDefaultColorForPlot:index alpha:0.25];
 	[self addInputPortWithType:QCPortTypeColor
 						forKey:[NSString stringWithFormat:@"plotFillColor%i",  index]
 				withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 								[NSString stringWithFormat:@"Plot Fill Color %i", index+1], QCPortAttributeNameKey,
 								QCPortTypeColor, QCPortAttributeTypeKey,
-								[self defaultColorForPlot:index alpha:0.25], QCPortAttributeDefaultValueKey,
+								fillColor, QCPortAttributeDefaultValueKey,
 								nil]];
+	CGColorRelease(fillColor);
 	
 	[self addInputPortWithType:QCPortTypeNumber
 						forKey:[NSString stringWithFormat:@"plotDataLineWidth%i",  index]
@@ -128,7 +132,7 @@
 								nil]];
 	
 	// Add the new plot to the graph
-	CPBarPlot *barPlot = [CPBarPlot tubularBarPlotWithColor:[CPColor greenColor] horizontalBars:NO];
+	CPTBarPlot *barPlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor greenColor] horizontalBars:NO];
 	barPlot.identifier = [NSString stringWithFormat:@"Bar Plot %i", index+1];
 	barPlot.dataSource = self;
 	[graph addPlot:barPlot];
@@ -157,16 +161,18 @@
 	double barWidth = self.inputBarWidth*unitWidth/count;
 	
 	// Configure scatter plots for active plot inputs
-	for (CPBarPlot* plot in [graph allPlots])
+	for (CPTBarPlot* plot in [graph allPlots])
 	{
 		int index = [[graph allPlots] indexOfObject:plot];
-		plot.lineStyle.lineColor = [CPColor colorWithCGColor:[self dataLineColor:index]];
-		plot.lineStyle.lineWidth = [self dataLineWidth:index];
-		plot.baseValue = CPDecimalFromDouble(self.inputBaseValue);
-		plot.barWidth = barWidth;
-		plot.barOffset = self.inputBarOffset;
+        CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
+        lineStyle.lineColor = [CPTColor colorWithCGColor:(CGColorRef)[self dataLineColor:index]];
+        lineStyle.lineWidth = [self dataLineWidth:index];
+        plot.lineStyle = lineStyle;
+		plot.baseValue = CPTDecimalFromDouble(self.inputBaseValue);
+		plot.barWidth = CPTDecimalFromDouble(barWidth);
+		plot.barOffset = CPTDecimalFromDouble(self.inputBarOffset);
 		plot.barsAreHorizontal = self.inputHorizontalBars;		
-		plot.fill = [CPFill fillWithColor:[CPColor colorWithCGColor:[self areaFillColor:index]]];
+		plot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:(CGColorRef)[self areaFillColor:index]]];
 		
 		[plot reloadData];
 	}
@@ -177,12 +183,12 @@
 #pragma mark -
 #pragma markData source methods
 
--(CPFill *) barFillForBarPlot:(CPBarPlot *)barPlot recordIndex:(NSNumber *)index
+-(CPTFill *) barFillForBarPlot:(CPTBarPlot *)barPlot recordIndex:(NSNumber *)index
 {
 	return nil;
 }
 
--(NSUInteger)numberOfRecordsForPlot:(CPPlot *)plot 
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot 
 {	
 	NSUInteger plotIndex = [[graph allPlots] indexOfObject:plot];
 	NSString *key = [NSString stringWithFormat:@"plotNumbers%i", plotIndex];
@@ -193,7 +199,7 @@
 	return [[self valueForInputKey:key] count];
 }
 
-- (NSArray *)numbersForPlot:(CPBarPlot *)plot field:(NSUInteger)fieldEnum recordIndexRange:(NSRange)indexRange
+- (NSArray *)numbersForPlot:(CPTBarPlot *)plot field:(NSUInteger)fieldEnum recordIndexRange:(NSRange)indexRange
 {
 	NSUInteger plotIndex = [[graph allPlots] indexOfObject:plot];
 	NSString *key = [NSString stringWithFormat:@"plotNumbers%i", plotIndex];
@@ -204,7 +210,7 @@
 	NSDictionary *dict = [self valueForInputKey:key];
 	NSMutableArray *array = [NSMutableArray array];
 	
-	if (fieldEnum == CPBarPlotFieldBarLocation)
+	if (fieldEnum == CPTBarPlotFieldBarLocation)
 	{
 		// Calculate horizontal position of bar - nth bar index + barWidth*plotIndex + 0.5
 		float xpos;

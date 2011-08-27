@@ -1,7 +1,7 @@
 #import <Quartz/Quartz.h>
 #import <CorePlot/CorePlot.h>
 
-@interface CorePlotQCPlugIn : QCPlugIn <CPPlotDataSource>
+@interface CorePlotQCPlugIn : QCPlugIn <CPTPlotDataSource>
 {	
 	NSUInteger numberOfPlots;
 	BOOL configurationCheck;
@@ -9,7 +9,7 @@
 	void *imageData;
 	CGContextRef bitmapContext;
 	id<QCPlugInOutputImageProvider> imageProvider;
-	CPGraph *graph;
+	CPTGraph *graph;
 }
 
 /*
@@ -55,14 +55,14 @@ You can access their values in the appropriate plug-in methods using self.inputF
 - (BOOL) configurePlots;
 - (BOOL) configureAxis;
 
-- (NSUInteger)numberOfRecordsForPlot:(CPPlot *)plot;
-- (CGColorRef) defaultColorForPlot:(NSUInteger)index alpha:(float)alpha;
+- (NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot;
+- (CGColorRef) newDefaultColorForPlot:(NSUInteger)index alpha:(CGFloat)alpha;
 
 - (void) freeResources;
 
-- (CGColorRef) dataLineColor:(NSUInteger)index;
+- (id) dataLineColor:(NSUInteger)index;
 - (CGFloat) dataLineWidth:(NSUInteger)index;
-- (CGColorRef) areaFillColor:(NSUInteger)index;
-- (CGImageRef) areaFillImage:(NSUInteger)index;
+- (id) areaFillColor:(NSUInteger)index;
+- (CGImageRef) newAreaFillImage:(NSUInteger)index;
 
 @end
