@@ -178,8 +178,6 @@ static NSString * const CPPlotBindingOptions = @"CPPlotBindingOptions";					///<
 	[labelTextStyle release];
 	[labelFormatter release];
 	[labelAnnotations release];
-	if (plotDelegate)
-		[plotDelegate release];
 	
 	for ( NSDictionary *infoDict in plotDataBindings ) {
 		[[infoDict objectForKey:CPPlotBindingObservedObject] removeObserver:self forKeyPath:[infoDict objectForKey:CPPlotBindingKeyPath]];

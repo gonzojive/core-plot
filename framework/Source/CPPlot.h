@@ -174,7 +174,7 @@ typedef enum _CPPlotCachePrecision {
 
 /// @name Plot Delegate
 /// @{
-@property (nonatomic, readwrite, retain) id <CPPlotDelegate> plotDelegate;
+@property (nonatomic, readwrite, assign) id <CPPlotDelegate> plotDelegate;
 ///	@}
 
 /// @name Identification
