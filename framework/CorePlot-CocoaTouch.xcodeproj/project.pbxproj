@@ -82,6 +82,11 @@
 		07B69B7112B62E9600F4C16C /* CPTMutableLineStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B69B6F12B62E9600F4C16C /* CPTMutableLineStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07B69B7212B62E9600F4C16C /* CPTMutableLineStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B69B7012B62E9600F4C16C /* CPTMutableLineStyle.m */; };
 		07FCF2D4115B54DE00E46606 /* _CPTSlateTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCF2D2115B54DE00E46606 /* _CPTSlateTheme.m */; };
+		9D9546E315F057E200C62BBC /* _CPTFillColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828A0FB89E610035D8DA /* _CPTFillColor.h */; };
+		9D9546E415F057E200C62BBC /* _CPTFillGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828C0FB89E610035D8DA /* _CPTFillGradient.h */; };
+		9D9546E515F057E200C62BBC /* CPTGridLineGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = C38DD49511A04B99002A68E7 /* CPTGridLineGroup.h */; };
+		9D9546E615F057E200C62BBC /* _CPTFillImage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828E0FB89E610035D8DA /* _CPTFillImage.h */; };
+		9D9546E715F057E200C62BBC /* CPTTextStylePlatformSpecific.h in Headers */ = {isa = PBXBuildFile; fileRef = C35A66051102723E00FE24BB /* CPTTextStylePlatformSpecific.h */; };
 		BC4FAF29100D7DF300811DD3 /* NSDecimalNumberExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B82B10FB89E610035D8DA /* NSDecimalNumberExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		BC74A2C210FC087800E7E90D /* CPTPieChart.h in Headers */ = {isa = PBXBuildFile; fileRef = BC74A2C010FC087800E7E90D /* CPTPieChart.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC74A2C310FC087800E7E90D /* CPTPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = BC74A2C110FC087800E7E90D /* CPTPieChart.m */; };
@@ -147,9 +152,7 @@
 		C35A65C811025FCC00FE24BB /* CPTXYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = C35A65C211025FCC00FE24BB /* CPTXYAxis.m */; };
 		C35A65C911025FCC00FE24BB /* CPTXYAxisSet.h in Headers */ = {isa = PBXBuildFile; fileRef = C35A65C311025FCC00FE24BB /* CPTXYAxisSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C35A65CA11025FCC00FE24BB /* CPTXYAxisSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C35A65C411025FCC00FE24BB /* CPTXYAxisSet.m */; };
-		C35A66071102723E00FE24BB /* CPTTextStylePlatformSpecific.h in Headers */ = {isa = PBXBuildFile; fileRef = C35A66051102723E00FE24BB /* CPTTextStylePlatformSpecific.h */; settings = {ATTRIBUTES = (); }; };
 		C35A66081102723E00FE24BB /* CPTTextStylePlatformSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = C35A66061102723E00FE24BB /* CPTTextStylePlatformSpecific.m */; };
-		C38DD49711A04B99002A68E7 /* CPTGridLineGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = C38DD49511A04B99002A68E7 /* CPTGridLineGroup.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C38DD49811A04B99002A68E7 /* CPTGridLineGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = C38DD49611A04B99002A68E7 /* CPTGridLineGroup.m */; };
 		C3920ACF1395B7680045F3BB /* CPTLegend.h in Headers */ = {isa = PBXBuildFile; fileRef = C3920ACD1395B7680045F3BB /* CPTLegend.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3920AD01395B7680045F3BB /* CPTLegend.m in Sources */ = {isa = PBXBuildFile; fileRef = C3920ACE1395B7680045F3BB /* CPTLegend.m */; };
@@ -175,9 +178,6 @@
 		C3B623D1107EC96E0009EF0B /* CPTUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B82A70FB89E610035D8DA /* CPTUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3B623D2107EC9760009EF0B /* CPTXYGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B82B80FB89E610035D8DA /* CPTXYGraph.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3B623D3107EC97A0009EF0B /* NSNumberExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B82B30FB89E610035D8DA /* NSNumberExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C3B623D4107EC9800009EF0B /* _CPTFillColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828A0FB89E610035D8DA /* _CPTFillColor.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C3B623D5107EC9820009EF0B /* _CPTFillGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828C0FB89E610035D8DA /* _CPTFillGradient.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C3B623D6107EC9830009EF0B /* _CPTFillImage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9B828E0FB89E610035D8DA /* _CPTFillImage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C3CAFB3B1229E48200F5C989 /* CPTMutableNumericData+TypeConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = C3CAFB391229E48200F5C989 /* CPTMutableNumericData+TypeConversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3CAFB3C1229E48200F5C989 /* CPTMutableNumericData+TypeConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CAFB3A1229E48200F5C989 /* CPTMutableNumericData+TypeConversion.m */; };
 		C3CCA04813E8D94800CE6DB1 /* _CPTConstraintsFixed.h in Headers */ = {isa = PBXBuildFile; fileRef = C3CCA04413E8D94800CE6DB1 /* _CPTConstraintsFixed.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -811,12 +811,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3B623D0107EC96B0009EF0B /* CPTextLayer.h in Headers */,
-				C3B623D4107EC9800009EF0B /* _CPFillColor.h in Headers */,
-				C3B623D5107EC9820009EF0B /* _CPFillGradient.h in Headers */,
-				C3B623D6107EC9830009EF0B /* _CPFillImage.h in Headers */,
-				C38DD49711A04B99002A68E7 /* CPGridLineGroup.h in Headers */,
-				C35A66071102723E00FE24BB /* CPTextStylePlatformSpecific.h in Headers */,
+				9D9546E315F057E200C62BBC /* _CPTFillColor.h in Headers */,
+				9D9546E415F057E200C62BBC /* _CPTFillGradient.h in Headers */,
+				9D9546E615F057E200C62BBC /* _CPTFillImage.h in Headers */,
+				9D9546E515F057E200C62BBC /* CPTGridLineGroup.h in Headers */,
+				9D9546E715F057E200C62BBC /* CPTTextStylePlatformSpecific.h in Headers */,
 				BC9B83C30FB8AC4B0035D8DA /* CorePlot-CocoaTouch.h in Headers */,
 				070CB8430FC9DED400F3152B /* CPTAxis.h in Headers */,
 				070CB8470FC9DED400F3152B /* CPTAxisSet.h in Headers */,
@@ -883,21 +882,16 @@
 				BCC7EA471006BF5700B39451 /* _CPTPlainWhiteTheme.h in Headers */,
 				BCC7EA491006BF5700B39451 /* _CPTStocksTheme.h in Headers */,
 				C40CFB94107EC1B40057E828 /* _CPTXYTheme.h in Headers */,
-				C3B623D4107EC9800009EF0B /* _CPTFillColor.h in Headers */,
-				C3B623D5107EC9820009EF0B /* _CPTFillGradient.h in Headers */,
-				C3B623D6107EC9830009EF0B /* _CPTFillImage.h in Headers */,
 				C3CCA04813E8D94800CE6DB1 /* _CPTConstraintsFixed.h in Headers */,
 				C3CCA04A13E8D94800CE6DB1 /* _CPTConstraintsRelative.h in Headers */,
 				C3436C5113F4AC6000739AC2 /* _CPTSlateTheme.h in Headers */,
 				C304565313F4AC9A004D04BC /* _CPTDarkGradientTheme.h in Headers */,
 				C35A65BF11025FB300FE24BB /* CPTAxisLabelGroup.h in Headers */,
-				C38DD49711A04B99002A68E7 /* CPTGridLineGroup.h in Headers */,
 				C35A65B311025F8A00FE24BB /* CPTGridLines.h in Headers */,
 				C30C85AB1047428100181766 /* CPTPlotGroup.h in Headers */,
 				C3978E1013CE65C600A420D9 /* NSCoderExtensions.h in Headers */,
 				BC4FAF29100D7DF300811DD3 /* NSDecimalNumberExtensions.h in Headers */,
 				C3B623D3107EC97A0009EF0B /* NSNumberExtensions.h in Headers */,
-				C35A66071102723E00FE24BB /* CPTTextStylePlatformSpecific.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -927,7 +921,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CorePlot-CocoaTouch" */;
 			compatibilityVersion = "Xcode 3.2";

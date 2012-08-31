@@ -170,6 +170,15 @@ CPTPlotCachePrecision;
  **/
 -(void)plot:(CPTPlot *)plot dataLabelWasSelectedAtRecordIndex:(NSUInteger)index withEvent:(CPTNativeEvent *)event;
 
+/**	@brief Informs delegate that a point was
+ *	@if MacOnly clicked. @endif
+ *	@if iOSOnly touched. @endif
+ *	@param plot The plot.
+ *	@param plotPoint Point in plot data space of the point that was touched
+ *	@param event The event that triggered the selection.
+ **/
+-(BOOL)plot:(CPTPlot *)plot plotPointWasSelected:(NSDecimal *)plotPoint withEvent:(CPTNativeEvent *)event;
+
 ///	@}
 
 ///	@name Drawing

@@ -1541,6 +1541,20 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
 /// @name User Interaction
 /// @{
 
+-(BOOL)pointingDeviceDraggedEvent:(UIEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    id<CPTPlotDelegate> theDelegate = self.delegate;
+    if (theDelegate && [theDelegate respondsToSelector:@selector(plot:plotPointWasSelected:withEvent:)]) {
+        NSDecimal* plotAreaPoint = (NSDecimal *)malloc(sizeof(NSDecimal) * 3);
+        [plotSpace plotPoint:plotAreaPoint forPlotAreaViewPoint:interactionPoint];
+        [theDelegate plot:self plotPointWasSelected:plotAreaPoint withEvent:event];
+		
+        free(plotAreaPoint);
+    }
+    
+    return [super pointingDeviceDraggedEvent:event atPoint:interactionPoint];
+}
+
 /**
  *	@brief Informs the receiver that the user has
  *	@if MacOnly pressed the mouse button. @endif
@@ -1567,6 +1581,19 @@ NSString *const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data labels.
     }
 
     id<CPTPlotDelegate> theDelegate = self.delegate;
+    if (theDelegate && [theDelegate respondsToSelector:@selector(plot:plotPointWasSelected:withEvent:)] ) {
+        NSDecimal* plotAreaPoint = (NSDecimal *)malloc(sizeof(NSDecimal) * 3);
+        [plotSpace plotPoint:plotAreaPoint forPlotAreaViewPoint:interactionPoint];
+        [theDelegate plot:self plotPointWasSelected:plotAreaPoint withEvent:event];
+		
+        // Example usage:
+        //NSDecimal pX = plotAreaPoint[CPCoordinateX];
+        //NSDecimal pY = plotAreaPoint[CPCoordinateY];
+        //float xx = CPDecimalFloatValue(pX);
+        //float yy = CPDecimalFloatValue(pY);
+        //NSLog(@"coord in plot: %f, %f", xx, yy);
+        free(plotAreaPoint);
+    }
     if ( [theDelegate respondsToSelector:@selector(plot:dataLabelWasSelectedAtRecordIndex:)] ||
          [theDelegate respondsToSelector:@selector(plot:dataLabelWasSelectedAtRecordIndex:withEvent:)] ) {
         // Inform delegate if a label was hit
