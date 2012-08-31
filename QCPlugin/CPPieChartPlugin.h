@@ -1,7 +1,7 @@
-#import <Cocoa/Cocoa.h>
 #import "CorePlotQCPlugIn.h"
+#import <Cocoa/Cocoa.h>
 
-@interface CPPieChartPlugIn : CorePlotQCPlugIn <CPPieChartDataSource> {
+@interface CPPieChartPlugIn : CorePlotQCPlugIn<CPTPieChartDataSource> {
 }
 
 @property (assign) double inputPieRadius;
