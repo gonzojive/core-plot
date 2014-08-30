@@ -228,7 +228,7 @@
         }
     }
 
-    [pinchGestureRecognizer setScale:1.0f];
+    [(UIPinchGestureRecognizer *)pinchGestureRecognizer setScale:1.0f];
 }
 
 ///	@endcond
